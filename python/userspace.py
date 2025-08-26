@@ -5,12 +5,12 @@ import select
 import time
 
 DEV = "/dev/arduino_buzzer"   # Device criado pelo kernel module
-ARDUINO_PORT = "/dev/ttyACM0" # Ajuste conforme o seu Arduino
+ARDUINO_PORT = "/dev/ttyACM0" # Ajuste conforme seu Arduino
 BAUD = 9600
 
 # Abre porta serial do Arduino
 ser = serial.Serial(ARDUINO_PORT, BAUD, timeout=1)
-time.sleep(2)  # Espera o Arduino resetar
+time.sleep(2)  # Espera Arduino resetar
 
 # Abre device do kernel em modo não-bloqueante
 fd = os.open(DEV, os.O_RDONLY | os.O_NONBLOCK)

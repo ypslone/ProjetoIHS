@@ -1,19 +1,19 @@
 #include <Arduino.h>
 
-// ==== Configuração do pino ====
-const int buzzerPin = 8;  // Pino onde o buzzer está conectado
+const int buzzerPin = 8;
 
 void setup() {
-  Serial.begin(9600);      // Inicializa comunicação Serial
+  Serial.begin(9600);
   pinMode(buzzerPin, OUTPUT);
-  digitalWrite(buzzerPin, LOW);  // Garante que o buzzer comece desligado
+  digitalWrite(buzzerPin, LOW);
 }
 
 void loop() {
   if (Serial.available() > 0) {
     char c = Serial.read();
-    Serial.print("Recebido: ");
-    Serial.println(c);
+    Serial.print("Recebido: "); Serial.println(c);
+
+    // Liga o buzzer por 200ms para qualquer caractere
     digitalWrite(buzzerPin, HIGH);
     delay(200);
     digitalWrite(buzzerPin, LOW);
