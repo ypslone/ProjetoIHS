@@ -35,18 +35,25 @@ void loop() {
       Serial.println(c);
     }
 
+    if (c == ' ') {
+      Serial.print("-> BUZZER ON para: ");
+      Serial.println(c);
+      delay(280);
+
+    }
+
     if (c == 'A') {
       Serial.print("-> BUZZER ON para: ");
       Serial.println(c);
 
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'B') {
@@ -54,21 +61,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'C') {
@@ -76,21 +83,21 @@ void loop() {
       Serial.println(c);
 
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'D') {
@@ -99,17 +106,17 @@ void loop() {
       
       // Ativa buzzer
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'E') {
@@ -117,9 +124,9 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'F') {
@@ -127,21 +134,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'G') {
@@ -150,17 +157,17 @@ void loop() {
       
       // Ativa buzzer
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'H') {
@@ -168,21 +175,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'I') {
@@ -190,13 +197,13 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'J') {
@@ -204,38 +211,38 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'K') {
       Serial.print("-> BUZZER ON para: ");
       Serial.println(c);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'L') {
@@ -243,21 +250,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'M') {
@@ -265,13 +272,13 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'N') {
@@ -279,13 +286,13 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'O') {
@@ -293,17 +300,17 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'P') {
@@ -311,21 +318,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'Q') {
@@ -333,21 +340,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'R') {
@@ -355,17 +362,17 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'S') {
@@ -373,17 +380,17 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'T') {
@@ -391,9 +398,9 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'U') {
@@ -401,17 +408,17 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'V') {
@@ -419,21 +426,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'W') {
@@ -441,17 +448,17 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'X') {
@@ -459,21 +466,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'Y') {
@@ -481,21 +488,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == 'Z') {
@@ -503,21 +510,21 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == '1') {
@@ -525,25 +532,25 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == '2') {
@@ -551,25 +558,25 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == '3') {
@@ -577,25 +584,25 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == '4') {
@@ -603,25 +610,25 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == '5') {
@@ -629,25 +636,25 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == '6') {
@@ -655,25 +662,25 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == '7') {
@@ -681,25 +688,25 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == '8') {
@@ -707,25 +714,25 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else if (c == '9') {
@@ -733,25 +740,25 @@ void loop() {
       Serial.println(c);
       
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     }if (c == '0') {
@@ -759,25 +766,25 @@ void loop() {
       Serial.println(c);
 
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(150);
+      delay(210);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, HIGH);
-      delay(50);
+      delay(70);
       digitalWrite(buzzerPin, LOW);
-      delay(50);
+      delay(210);
 
       Serial.println("-> Buzzer finalizado");
     } else{
