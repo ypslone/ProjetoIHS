@@ -15,7 +15,7 @@
 #include <linux/uaccess.h>
 #include <linux/version.h>
 
-#define ARDUINO_DEVICE "/dev/ttyACM0"
+#define ARDUINO_DEVICE "/dev/ttyACM1"
 #define FIFO_SIZE 256
 
 /* FIFO e sincronização */
