@@ -1,5 +1,3 @@
-// driver.c - Kernel 6.x TTY-safe - VERSÃO CORRIGIDA
-
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/input.h>
@@ -18,30 +16,30 @@
 #define ARDUINO_DEVICE "/dev/ttyACM0"
 #define FIFO_SIZE 256
 
-/* FIFO e sincronização */
+
 static DEFINE_KFIFO(buzzer_fifo, unsigned char, FIFO_SIZE);
 static spinlock_t fifo_lock;
 static wait_queue_head_t fifo_wq;
 
-/* Serial do Arduino */
+
 static struct file *arduino_file = NULL;
 static struct mutex arduino_mutex;
 static struct task_struct *arduino_thread = NULL;
 static bool thread_running = true;
 
-/* Input handler prototypes */
+
 static bool my_filter(struct input_handle *handle, unsigned int type, unsigned int code, int value);
 static int my_connect(struct input_handler *handler, struct input_dev *dev, const struct input_device_id *id);
 static void my_disconnect(struct input_handle *handle);
 
-/* Devices EV_KEY */
+
 static const struct input_device_id ids[] = {
     { .flags = INPUT_DEVICE_ID_MATCH_EVBIT, .evbit = { BIT_WORD(EV_KEY) } },
     { },
 };
 MODULE_DEVICE_TABLE(input, ids);
 
-/* Input handler */
+
 static struct input_handler my_input_handler = {
     .filter = my_filter,
     .connect = my_connect,
@@ -50,7 +48,7 @@ static struct input_handler my_input_handler = {
     .id_table = ids,
 };
 
-/* Map KEY_* -> ASCII (A-Z, 0-9) */
+
 static unsigned char code_to_char(unsigned int code)
 {
     switch (code) {
@@ -71,7 +69,7 @@ static unsigned char code_to_char(unsigned int code)
     }
 }
 
-/* Abrir Arduino via /dev/ttyACM0 */
+
 static int open_arduino(void)
 {
     if (arduino_file) return 0;
@@ -87,7 +85,7 @@ static int open_arduino(void)
     return 0;
 }
 
-/* Envia dados usando vfs_write */
+
 static int send_to_arduino(unsigned char c)
 {
     ssize_t ret;
@@ -100,16 +98,16 @@ static int send_to_arduino(unsigned char c)
 
     mutex_lock(&arduino_mutex);
     
-    /* Debug: mostra exatamente o que está sendo enviado */
+
     pr_info("arduino_buzzer: DEBUG - enviando caractere '%c' ASCII=%d HEX=0x%02x\n", 
             (c >= 32 && c <= 126) ? c : '?', c, c);
     
-    /* Tenta diferentes métodos dependendo da versão do kernel */
+
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 14, 0)
-    /* Kernels mais novos */
+
     ret = kernel_write(arduino_file, &c, 1, &pos);
 #else
-    /* Kernels mais antigos */
+
     ret = vfs_write(arduino_file, &c, 1, &pos);
 #endif
     
@@ -119,7 +117,7 @@ static int send_to_arduino(unsigned char c)
         return -EIO;
     }
     
-    /* Força flush se disponível */
+
     if (arduino_file->f_op && arduino_file->f_op->flush) {
         ret = arduino_file->f_op->flush(arduino_file, NULL);
         if (ret) {
@@ -135,7 +133,7 @@ static int send_to_arduino(unsigned char c)
     return 0;
 }
 
-/* Thread de envio do FIFO */
+
 static int arduino_sender(void *data)
 {
     unsigned char c;
@@ -145,7 +143,7 @@ static int arduino_sender(void *data)
     pr_info("arduino_buzzer: thread de envio iniciada\n");
 
     while (thread_running && !kthread_should_stop()) {
-        /* Aguarda dados no FIFO */
+        
         ret = wait_event_interruptible(fifo_wq, 
                                        !kfifo_is_empty(&buzzer_fifo) || 
                                        kthread_should_stop());
@@ -156,10 +154,9 @@ static int arduino_sender(void *data)
         }
         
         if (ret == -ERESTARTSYS) {
-            continue; /* Signal recebido, continua */
+            continue;
         }
 
-        /* Retira caractere do FIFO */
         spin_lock_irqsave(&fifo_lock, flags);
         if (kfifo_out(&buzzer_fifo, &c, 1)) {
             spin_unlock_irqrestore(&fifo_lock, flags);
@@ -167,13 +164,13 @@ static int arduino_sender(void *data)
             pr_info("arduino_buzzer: THREAD - retirado do FIFO: '%c' (ASCII=%d, HEX=0x%02x)\n", 
                     (c >= 32 && c <= 126) ? c : '?', c, c);
             
-            /* Envia para Arduino */
+            
             ret = send_to_arduino(c);
             if (ret < 0) {
                 pr_err("arduino_buzzer: THREAD - falha ao enviar '%c'\n", c);
             }
             
-            /* Delay entre envios */
+            
             msleep(100);
         } else {
             spin_unlock_irqrestore(&fifo_lock, flags);
@@ -185,54 +182,39 @@ static int arduino_sender(void *data)
     return 0;
 }
 
-/* Filtro de input - VERSÃO DE TESTE SEM FIFO */
+
 static bool my_filter(struct input_handle *handle, unsigned int type, unsigned int code, int value)
 {
     unsigned char c;
 
-    /* Só processa key press (value == 1) */
+    
     if (type != EV_KEY || value != 1) {
         return false;
     }
 
-    /* Converte código para caractere */
+    
     c = code_to_char(code);
     if (!c) {
-        return false; /* Tecla não mapeada */
+        return false; 
     }
 
     pr_info("arduino_buzzer: FILTER - tecla capturada: '%c' (code=%u, ASCII=%d, HEX=0x%02x)\n", 
             c, code, c, c);
 
-    /* TESTE: Envia diretamente sem FIFO */
+    
     pr_info("arduino_buzzer: TESTE - enviando DIRETO sem FIFO\n");
     send_to_arduino(c);
     
-    /* Versão original com FIFO (comentada para teste)
-    unsigned long flags;
-    spin_lock_irqsave(&fifo_lock, flags);
-    if (!kfifo_in(&buzzer_fifo, &c, 1)) {
-        pr_warn("arduino_buzzer: FIFO cheio, descartando '%c'\n", c);
-        spin_unlock_irqrestore(&fifo_lock, flags);
-        return false;
-    }
-    spin_unlock_irqrestore(&fifo_lock, flags);
-    
-    pr_info("arduino_buzzer: FILTER - caractere '%c' adicionado ao FIFO\n", c);
-    wake_up_interruptible(&fifo_wq);
-    */
-    
-    return false; /* Não bloqueia o evento para outros handlers */
+    return false; 
 }
 
-/* Connect / disconnect */
+
 static int my_connect(struct input_handler *handler, struct input_dev *dev, 
                      const struct input_device_id *id)
 {
     struct input_handle *handle;
     int error;
 
-    /* Só conecta em teclados */
     if (!test_bit(EV_KEY, dev->evbit)) {
         return -ENODEV;
     }
@@ -277,30 +259,25 @@ static void my_disconnect(struct input_handle *handle)
     kfree(handle);
 }
 
-/* Init / Exit */
 static int __init arduino_init(void)
 {
     int ret;
 
     pr_info("arduino_buzzer: inicializando módulo...\n");
 
-    /* Inicializa estruturas de sincronização */
     spin_lock_init(&fifo_lock);
     init_waitqueue_head(&fifo_wq);
     mutex_init(&arduino_mutex);
     
-    /* Reinicializa o FIFO para garantir */
     INIT_KFIFO(buzzer_fifo);
     pr_info("arduino_buzzer: FIFO inicializado (tamanho=%d)\n", kfifo_size(&buzzer_fifo));
 
-    /* Abre conexão com Arduino */
     ret = open_arduino();
     if (ret) {
         pr_err("arduino_buzzer: falha ao abrir Arduino\n");
         return ret;
     }
 
-    /* Cria thread de envio */
     arduino_thread = kthread_create(arduino_sender, NULL, "arduino_sender");
     if (IS_ERR(arduino_thread)) {
         pr_err("arduino_buzzer: falha ao criar thread\n");
@@ -309,7 +286,6 @@ static int __init arduino_init(void)
     }
     wake_up_process(arduino_thread);
 
-    /* Registra handler de input */
     ret = input_register_handler(&my_input_handler);
     if (ret) {
         pr_err("arduino_buzzer: falha ao registrar handler: %d\n", ret);
@@ -338,17 +314,14 @@ static void __exit arduino_exit(void)
 {
     pr_info("arduino_buzzer: descarregando módulo...\n");
 
-    /* Remove handler de input */
     input_unregister_handler(&my_input_handler);
 
-    /* Para thread */
     thread_running = false;
     if (arduino_thread && !IS_ERR(arduino_thread)) {
         wake_up_interruptible(&fifo_wq);
         kthread_stop(arduino_thread);
     }
 
-    /* Fecha arquivo */
     if (arduino_file) {
         filp_close(arduino_file, NULL);
         arduino_file = NULL;

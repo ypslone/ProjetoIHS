@@ -1,4 +1,3 @@
-# Makefile para compilar driver kernel
 
 obj-m := driver.o
 
