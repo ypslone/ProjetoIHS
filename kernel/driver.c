@@ -13,32 +13,34 @@
 #include <linux/uaccess.h>
 #include <linux/version.h>
 
-#define ARDUINO_DEVICE "/dev/ttyACM0"
-#define FIFO_SIZE 256
+// Apenas ACM0 e ACM1
+static const char *arduino_devices[] = {
+    "/dev/ttyACM0",
+    "/dev/ttyACM1",
+    NULL
+};
 
+#define FIFO_SIZE 256
 
 static DEFINE_KFIFO(buzzer_fifo, unsigned char, FIFO_SIZE);
 static spinlock_t fifo_lock;
 static wait_queue_head_t fifo_wq;
 
-
 static struct file *arduino_file = NULL;
 static struct mutex arduino_mutex;
 static struct task_struct *arduino_thread = NULL;
 static bool thread_running = true;
-
+static char current_device[32] = {0}; // Armazena o dispositivo atual
 
 static bool my_filter(struct input_handle *handle, unsigned int type, unsigned int code, int value);
 static int my_connect(struct input_handler *handler, struct input_dev *dev, const struct input_device_id *id);
 static void my_disconnect(struct input_handle *handle);
-
 
 static const struct input_device_id ids[] = {
     { .flags = INPUT_DEVICE_ID_MATCH_EVBIT, .evbit = { BIT_WORD(EV_KEY) } },
     { },
 };
 MODULE_DEVICE_TABLE(input, ids);
-
 
 static struct input_handler my_input_handler = {
     .filter = my_filter,
@@ -47,7 +49,6 @@ static struct input_handler my_input_handler = {
     .name = "arduino_buzzer_handler",
     .id_table = ids,
 };
-
 
 static unsigned char code_to_char(unsigned int code)
 {
@@ -69,22 +70,34 @@ static unsigned char code_to_char(unsigned int code)
     }
 }
 
-
-static int open_arduino(void)
+// Função simples para detectar Arduino apenas entre ACM0 e ACM1
+static int detect_arduino(void)
 {
-    if (arduino_file) return 0;
-
-    arduino_file = filp_open(ARDUINO_DEVICE, O_RDWR | O_NOCTTY | O_NONBLOCK, 0);
-    if (IS_ERR(arduino_file)) {
-        pr_err("arduino_buzzer: falha ao abrir %s (%ld)\n", ARDUINO_DEVICE, PTR_ERR(arduino_file));
-        arduino_file = NULL;
-        return -ENODEV;
+    int i = 0;
+    struct file *test_file;
+    
+    pr_info("arduino_buzzer: procurando Arduino entre ACM0 e ACM1...\n");
+    
+    while (arduino_devices[i] != NULL) {
+        pr_info("arduino_buzzer: tentando %s...\n", arduino_devices[i]);
+        
+        test_file = filp_open(arduino_devices[i], O_RDWR | O_NOCTTY | O_NONBLOCK, 0);
+        if (!IS_ERR(test_file)) {
+            arduino_file = test_file;
+            strncpy(current_device, arduino_devices[i], sizeof(current_device) - 1);
+            current_device[sizeof(current_device) - 1] = '\0';
+            
+            pr_info("arduino_buzzer: Arduino encontrado em %s!\n", current_device);
+            return 0;
+        } else {
+            pr_info("arduino_buzzer: %s não disponível\n", arduino_devices[i]);
+        }
+        i++;
     }
-
-    pr_info("arduino_buzzer: Arduino aberto com sucesso\n");
-    return 0;
+    
+    pr_err("arduino_buzzer: Arduino não encontrado em ACM0 ou ACM1!\n");
+    return -ENODEV;
 }
-
 
 static int send_to_arduino(unsigned char c)
 {
@@ -98,26 +111,23 @@ static int send_to_arduino(unsigned char c)
 
     mutex_lock(&arduino_mutex);
     
-
-    pr_info("arduino_buzzer: DEBUG - enviando caractere '%c' ASCII=%d HEX=0x%02x\n", 
-            (c >= 32 && c <= 126) ? c : '?', c, c);
-    
+    pr_info("arduino_buzzer: DEBUG - enviando '%c' para %s (ASCII=%d, HEX=0x%02x)\n", 
+            (c >= 32 && c <= 126) ? c : '?', current_device, c, c);
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 14, 0)
-
     ret = kernel_write(arduino_file, &c, 1, &pos);
 #else
-
     ret = vfs_write(arduino_file, &c, 1, &pos);
 #endif
     
     if (ret != 1) {
-        pr_err("arduino_buzzer: ERRO - falha ao escrever! ret=%zd, char=0x%02x\n", ret, c);
+        pr_err("arduino_buzzer: ERRO - falha ao escrever em %s! ret=%zd, char=0x%02x\n", 
+               current_device, ret, c);
         mutex_unlock(&arduino_mutex);
         return -EIO;
     }
     
-
+    // Flush do buffer
     if (arduino_file->f_op && arduino_file->f_op->flush) {
         ret = arduino_file->f_op->flush(arduino_file, NULL);
         if (ret) {
@@ -127,12 +137,11 @@ static int send_to_arduino(unsigned char c)
     
     mutex_unlock(&arduino_mutex);
     
-    pr_info("arduino_buzzer: SUCESSO - enviado '%c' (0x%02x) ret=%zd\n", 
-            (c >= 32 && c <= 126) ? c : '?', c, ret);
+    pr_info("arduino_buzzer: SUCESSO - enviado '%c' para %s (0x%02x) ret=%zd\n", 
+            (c >= 32 && c <= 126) ? c : '?', current_device, c, ret);
     
     return 0;
 }
-
 
 static int arduino_sender(void *data)
 {
@@ -143,7 +152,6 @@ static int arduino_sender(void *data)
     pr_info("arduino_buzzer: thread de envio iniciada\n");
 
     while (thread_running && !kthread_should_stop()) {
-        
         ret = wait_event_interruptible(fifo_wq, 
                                        !kfifo_is_empty(&buzzer_fifo) || 
                                        kthread_should_stop());
@@ -164,12 +172,10 @@ static int arduino_sender(void *data)
             pr_info("arduino_buzzer: THREAD - retirado do FIFO: '%c' (ASCII=%d, HEX=0x%02x)\n", 
                     (c >= 32 && c <= 126) ? c : '?', c, c);
             
-            
             ret = send_to_arduino(c);
             if (ret < 0) {
                 pr_err("arduino_buzzer: THREAD - falha ao enviar '%c'\n", c);
             }
-            
             
             msleep(100);
         } else {
@@ -182,17 +188,14 @@ static int arduino_sender(void *data)
     return 0;
 }
 
-
 static bool my_filter(struct input_handle *handle, unsigned int type, unsigned int code, int value)
 {
     unsigned char c;
 
-    
     if (type != EV_KEY || value != 1) {
         return false;
     }
 
-    
     c = code_to_char(code);
     if (!c) {
         return false; 
@@ -201,13 +204,12 @@ static bool my_filter(struct input_handle *handle, unsigned int type, unsigned i
     pr_info("arduino_buzzer: FILTER - tecla capturada: '%c' (code=%u, ASCII=%d, HEX=0x%02x)\n", 
             c, code, c, c);
 
-    
+    // Envia direto para teste (você pode mudar para usar o FIFO se preferir)
     pr_info("arduino_buzzer: TESTE - enviando DIRETO sem FIFO\n");
     send_to_arduino(c);
     
     return false; 
 }
-
 
 static int my_connect(struct input_handler *handler, struct input_dev *dev, 
                      const struct input_device_id *id)
@@ -272,9 +274,10 @@ static int __init arduino_init(void)
     INIT_KFIFO(buzzer_fifo);
     pr_info("arduino_buzzer: FIFO inicializado (tamanho=%d)\n", kfifo_size(&buzzer_fifo));
 
-    ret = open_arduino();
+    // Detecta automaticamente entre ACM0 e ACM1
+    ret = detect_arduino();
     if (ret) {
-        pr_err("arduino_buzzer: falha ao abrir Arduino\n");
+        pr_err("arduino_buzzer: Arduino não encontrado em ACM0 ou ACM1\n");
         return ret;
     }
 
@@ -293,6 +296,7 @@ static int __init arduino_init(void)
     }
 
     pr_info("arduino_buzzer: módulo carregado com sucesso!\n");
+    pr_info("arduino_buzzer: Arduino encontrado em: %s\n", current_device);
     pr_info("arduino_buzzer: pressione A-Z ou 0-9 para testar\n");
     return 0;
 
@@ -327,7 +331,7 @@ static void __exit arduino_exit(void)
         arduino_file = NULL;
     }
 
-    pr_info("arduino_buzzer: módulo descarregado\n");
+    pr_info("arduino_buzzer: módulo descarregado de %s\n", current_device);
 }
 
 module_init(arduino_init);
@@ -335,5 +339,5 @@ module_exit(arduino_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Seu Nome");
-MODULE_DESCRIPTION("Captura A-Z/0-9 e envia via serial para Arduino");
-MODULE_VERSION("2.7");
+MODULE_DESCRIPTION("Captura A-Z/0-9 e envia via serial para Arduino (ACM0/ACM1)");
+MODULE_VERSION("3.0");
